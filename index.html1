@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Darryl's Club</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .bw-image {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            border-radius: 10px;
+            filter: grayscale(100%);
+        }
+
+        .link-btn {
+            display: block;
+            margin: 15px auto;
+            padding: 12px 20px;
+            width: 200px;
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #000000;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .link-btn:hover {
+            background-color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Darryl's Club</h1>
+
+    <img class="bw-image" src="https://cdn.discordapp.com/attachments/1389317036714496020/1409237685230632981/45d89f53a81186a8f41e24c048cd19ca.jpg" alt="Black and white image">
+
+    <p>
+        Hello, welcome to Darryl's club official website! Here you can find redirections to our Discord server & Null's brawl club. 
+      For further assistance, please open a support ticket in the server.
+
+      Please press the buttons below to be redirected to either the server or the club.
+    </p>
+
+    <a href="https://discord.gg/EnJApsrQKA" class="link-btn">Discord Server</a>
+    <a href="https://link.nulls.gg/nb/invite/band/en?tag=QQ0LUQ998&token=p3n4y9uvzcr" class="link-btn">Null's Club</a>
+
+</body>
+</html>
