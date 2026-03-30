@@ -1,15 +1,14 @@
-// Show loader for a fixed duration, then hide
-document.addEventListener("DOMContentLoaded", () => {
+// Always hide the loader after 1 second
+setTimeout(() => {
   const loader = document.getElementById('loading-screen');
-  
-  // Delay in ms (1.2 seconds)
-  setTimeout(() => {
-    loader.style.opacity = '0';
+  if (loader) {
+    loader.style.transition = "opacity 0.5s ease";
+    loader.style.opacity = "0";
     setTimeout(() => {
-      loader.style.display = 'none';
+      loader.style.display = "none";
     }, 500); // fade out
-  }, 1200);
-});
+  }
+}, 1000);
 
 // Section toggle
 function showSection(id){
