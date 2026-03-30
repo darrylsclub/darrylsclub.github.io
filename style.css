@@ -1,112 +1,82 @@
-/* Basic Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Theme Colors */
+/* Reset & Variables */
+* { margin:0; padding:0; box-sizing:border-box; }
 :root {
-  --bg: #0e0e0e;
-  --text: #fff;
-  --accent: #00eaff;
-  --accent2: #a73aff;
-  --btn: #0b0b0b;
+  --bg:#0e0e0e;
+  --text:#fff;
+  --accent:#00eaff;
+  --accent2:#a73aff;
+  --btn:#0b0b0b;
 }
 
-/* Page Styles */
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Segoe UI', sans-serif;
-  overflow-x: hidden;
-}
+/* Body */
+body { font-family:'Segoe UI', sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
 
-/* Loading Bar */
-#loading-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 4px;
-  width: 0;
-  background: var(--accent);
-  animation: load 2s ease-out forwards;
+/* Loading Screen */
+#loading-screen {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:#111; display:flex; flex-direction:column;
+  justify-content:center; align-items:center; z-index:9999;
 }
-@keyframes load {
-  100% { width: 100% }
+.spinner {
+  width:50px; height:50px; border:5px solid #333;
+  border-top:5px solid var(--accent); border-radius:50%;
+  animation: spin 1s linear infinite;
 }
+@keyframes spin { 100% { transform:rotate(360deg); } }
 
 /* Sidebar */
 #sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 240px;
-  height: 100vh;
-  background: #111;
-  padding: 20px;
-  border-right: 2px solid var(--accent);
-  overflow-y: auto;
+  position:fixed; top:0; left:0; width:240px; height:100vh;
+  background:#111; padding:20px; border-right:2px solid var(--accent);
+  overflow-y:auto; transition: transform 0.3s ease;
 }
-#sidebar .logo-section {
-  text-align: center;
-  margin-bottom: 20px;
+#sidebar.hidden { transform:translateX(-260px); }
+
+#sidebar .logo-section { text-align:center; margin-bottom:20px; }
+#sidebar .logo-section img { width:80px; border-radius:50%; border:2px solid var(--accent2); }
+
+#sidebar nav ul li { margin:15px 0; cursor:pointer; transition:0.3s; }
+#sidebar nav ul li:hover { color:var(--accent); }
+
+.version { text-align:center; margin-top:20px; }
+
+/* Hamburger */
+#hamburger {
+  display:none; position:fixed; top:15px; left:15px;
+  font-size:28px; cursor:pointer; z-index:1000; color:var(--accent);
 }
-#sidebar .logo-section img {
-  width: 80px;
-  border-radius: 50%;
-  border: 2px solid var(--accent2);
+
+/* Three Dots Menu */
+#dot-menu { position:fixed; bottom:20px; right:20px; font-size:28px; cursor:pointer; color:var(--accent); z-index:1000; }
+#dot-menu-content {
+  display:none; position:fixed; bottom:60px; right:20px; background:#111;
+  border:1px solid var(--accent); border-radius:6px; padding:10px;
 }
-#sidebar nav ul li {
-  margin: 15px 0;
-  cursor: pointer;
-  transition: 0.3s;
-}
-#sidebar nav ul li:hover {
-  color: var(--accent);
-}
+#dot-menu-content ul li { padding:5px 10px; cursor:pointer; transition:0.2s; }
+#dot-menu-content ul li:hover { color:var(--accent2); }
 
 /* Main Content */
-main {
-  margin-left: 260px;
-  padding: 30px;
-}
-section {
-  display: none;
-  opacity: 0;
-  animation: fadein 0.6s forwards;
-}
-section.active-section {
-  display: block;
-}
-
-/* Animations */
-@keyframes fadein {
-  100% { opacity: 1; }
-}
-
-/* Rule Boxes */
-.rule {
-  background: #111;
-  border: 1px solid var(--accent);
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 6px;
-}
-.rule strong { color: var(--accent2); }
+main { margin-left:260px; padding:30px; transition: margin-left 0.3s ease; }
+section { display:none; opacity:0; animation: fadein 0.6s forwards; }
+section.active-section { display:block; }
 
 /* Staff Cards */
-.staff-card {
-  background: #111;
-  border: 1px solid var(--accent);
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 6px;
-}
-.staff-card .role-owner {
-  font-size: 0.9em;
-  color: var(--accent2);
-}
-.dropdown-content {
-  display: none;
+.staff-card { background:#111; border:1px solid var(--accent); padding:15px; margin:10px 0; border-radius:6px; }
+.role-owner { font-size:0.9em; color:var(--accent2); }
+
+/* Dropdown */
+.dropdown-content { display:none; padding:10px; background:#222; border-radius:6px; margin-top:5px; }
+
+/* Rules */
+.rule { background:#111; border:1px solid var(--accent); padding:12px; margin:10px 0; border-radius:6px; }
+.rule strong { color:var(--accent2); }
+
+/* Animations */
+@keyframes fadein { 100% { opacity:1; } }
+
+/* Responsive */
+@media(max-width:768px){
+  #sidebar { transform:translateX(-260px); }
+  #hamburger { display:block; }
+  main { margin-left:0; padding:20px; }
 }
