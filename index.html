@@ -3,37 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Darryl’s Club — Version 1.2.0</title>
+<title>Darryl’s Club — v1.2.0</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Loading Screen -->
-<div id="loading-screen">
-  <div class="spinner"></div>
-  <p>Loading Darryl’s Club...</p>
-</div>
+<!-- Loading Bar -->
+<div id="loading-bar"></div>
 
 <!-- Mobile Top Buttons -->
 <div id="mobile-buttons">
   <button onclick="showSection('home')">Home</button>
   <button onclick="showSection('staff')">Staff</button>
-  <button onclick="showSection('rules')">Rules</button>
+  <button onclick="showSection('rules')">Q&A</button>
 </div>
 
 <!-- Desktop Sidebar -->
 <aside id="sidebar">
-  <div class="logo-section">
-    <h2>Darryl’s Club</h2>
-  </div>
+  <div class="logo-section"><h2>Darryl’s Club</h2></div>
   <nav>
     <ul>
       <li onclick="showSection('home')">🏠 Home</li>
       <li onclick="showSection('qna')">❓ Q&A</li>
-      <li onclick="showSection('staff')">🛡️ Staff List</li>
-      <li onclick="showSection('discord')">🔗 Discord Server</li>
+      <li onclick="showSection('staff')">🛡️ Staff</li>
+      <li onclick="showSection('discord')">🔗 Discord</li>
       <li onclick="showSection('nulls')">🟦 Null’s Club</li>
-      <li onclick="showSection('verification')">🔒 Server Verification</li>
+      <li onclick="showSection('verification')">🔒 Verification</li>
       <li onclick="showSection('credits')">📝 Credits</li>
     </ul>
   </nav>
@@ -46,7 +41,7 @@
   <!-- Home -->
   <section id="home" class="active-section">
     <h1>Welcome to Darryl’s Club</h1>
-    <p>The official hub for the Darryl’s Club community. Use the sidebar to navigate through all sections.</p>
+    <p>The official information hub for the community. Use the menu to navigate.</p>
   </section>
 
   <!-- Q&A -->
@@ -54,19 +49,19 @@
     <h2>❓ Q&A</h2>
     <div class="qa">
       <strong>How to become staff?</strong>
-      <p>Engage with the community, show trustworthiness, and reach out to Higher Staff for consideration.</p>
+      <p>Engage with the community, be active and trustworthy, then contact Higher Staff.</p>
     </div>
     <div class="qa">
       <strong>What happens if I break a rule?</strong>
-      <p>Warnings, timeouts, or bans depending on the severity of the infraction.</p>
+      <p>Warnings, timeouts, or bans depending on severity.</p>
     </div>
     <div class="qa">
       <strong>Can I appeal a ban?</strong>
-      <p>Contact Mr.Black or any staff member you are connected with to submit an appeal.</p>
+      <p>Contact Mr.Black or any staff member you are connected with.</p>
     </div>
   </section>
 
-  <!-- Staff List -->
+  <!-- Staff -->
   <section id="staff">
     <h2>🛡️ Server Staff</h2>
 
@@ -105,9 +100,45 @@
     </div>
 
     <h3>🕊️ Retired Staff</h3>
-    <div class="staff-card">
-      <p>@ilovetoast78 — Overseer</p>
-      <p>@ddiana.lol — Manager</p>
-      <p>@dominoo90 — Moderator</p>
-      <p>@gabriel_1975 — Senior Moderator</p>
-      <p>@aiden_from_sbg16 — Moderator</p>
+    <p>@ilovetoast78 (Overseer), @ddiana.lol (Manager), @dominoo90 (Moderator), @gabriel_1975 (Senior Mod), @aiden_from_sbg16 (Moderator)</p>
+
+    <p class="disclaimer">This list may be slightly outdated and will be updated regularly.</p>
+  </section>
+
+  <!-- Discord -->
+  <section id="discord">
+    <h2>🔗 Discord Server</h2>
+    <a href="https://discord.gg/EnJApsrQKA" target="_blank"><button>Join Darryl’s Club</button></a>
+  </section>
+
+  <!-- Null’s Club -->
+  <section id="nulls">
+    <h2>🟦 Null’s Club</h2>
+    <a href="https://link.nulls.gg/nb/invite/band/en?tag=QQ0LUQ998&token=p3n4y9uvzcr" target="_blank"><button>Visit Null’s Club</button></a>
+  </section>
+
+  <!-- Verification -->
+  <section id="verification">
+    <h2>🔒 Server Verification</h2>
+    <pre>
+Age:
+How did you find the server?
+Main account:
+Rules confirmed (yes/no):
+Past bans:
+Understanding of moderation:
+    </pre>
+  </section>
+
+  <!-- Credits -->
+  <section id="credits">
+    <h2>📝 Credits</h2>
+    <p>Website developed by @ilovetoast78 & @ddiana.lol</p>
+    <p>Version 1.2.0</p>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
