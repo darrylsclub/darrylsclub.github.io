@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Darryl’s Club — Version 2.1.0</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <!-- Loading Bar -->
+  <div id="loading-bar"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="logo-section">
+      <img id="logo" src="https://i.postimg.cc/W4Y1jwtg/301bc99bc52c48890f5618b9b0292341.jpg" alt="Darryl’s Club Logo">
+      <h2>Darryl’s Club</h2>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="showSection('home')">🏠 Home</li>
+        <li onclick="showSection('staff')">🛡️ Staff Center</li>
+        <li onclick="showSection('rules')">📘 Rules & Safety</li>
+        <li onclick="showSection('help')">📚 Help Center</li>
+        <li onclick="showSection('community')">🎪 Community Hub</li>
+        <li onclick="showSection('events')">🏆 Events Center</li>
+        <li onclick="showSection('stats')">📊 Server Stats</li>
+        <li onclick="showSection('media')">🖼️ Media & Gallery</li>
+        <li onclick="showSection('history')">📜 Server History</li>
+        <li onclick="showSection('links')">🤝 Partners & Links</li>
+        <li onclick="showSection('fun')">🧩 Fun Zone</li>
+        <li onclick="showSection('tech')">⚙️ Technical & Docs</li>
+        <li onclick="showSearch()">🔍 Search</li>
+        <li onclick="toggleTheme()">🌙 Theme</li>
+      </ul>
+    </nav>
+    <div class="version">v2.1.0</div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="content">
+
+    <!-- Home -->
+    <section id="home" class="active-section">
+      <div class="header-image">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Brawl_Stars_Darryl.png" alt="Darryl from Brawl Stars">
+      </div>
+      <h1>Welcome to Darryl’s Club</h1>
+      <p>The official hub for the Darryl’s Club community. Use the sidebar to navigate through all sections.</p>
+    </section>
+
+    <!-- Staff Center -->
+    <section id="staff">
+      <h2>🛡️ Staff Center</h2>
+      <p>Explore the staff team, roles, responsibilities, and more.</p>
+      <div class="staff-list">
+        <!-- Example Profile Card -->
+        <div class="staff-card">
+          <h3>Mr.Black <span class="role-owner">(Owner)</span></h3>
+          <div class="dropdown">
+            <button onclick="toggleDropdown(this)">View Responsibilities</button>
+            <div class="dropdown-content">
+              <p>Owner: Final authority and decision-maker.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Additional staff cards will be added here -->
+      </div>
+    </section>
+
+    <!-- Rules & Safety -->
+    <section id="rules">
+      <h2>📘 Rules & Safety</h2>
+      <div class="rule">
+        <strong>Be respectful & civil</strong>
+        <p>We aim for a safe, welcoming space for everyone.</p>
+      </div>
+      <div class="rule">
+        <strong>No NSFW/Inappropriate Content</strong>
+        <p>Talking or sharing inappropriate content will result in moderation action.</p>
+      </div>
+      <div class="rule">
+        <strong>No abusive language or slurs</strong>
+        <p>Attempts to bypass filters may lead to automated mutes.</p>
+      </div>
+      <div class="rule">
+        <strong>Report violations to staff</strong>
+        <p>If you encounter issues, contact staff immediately.</p>
+      </div>
+      <div class="rule">
+        <strong>Follow Discord’s Terms</strong>
+        <p>We abide by Discord's official ToS and guidelines. citeturn0search0</p>
+      </div>
+      <div class="rule">
+        <strong>No doxxing</strong>
+        <p>Sharing personal information without consent is prohibited.</p>
+      </div>
+      <div class="rule">
+        <strong>Respect staff personnel</strong>
+        <p>Listen to staff, especially during emergencies.</p>
+      </div>
+    </section>
+
+    <!-- Help Center -->
+    <section id="help">
+      <h2>📚 Help Center</h2>
+      <p>Find guides on verifying, appealing, and common issues.</p>
+    </section>
+
+    <!-- Community Hub -->
+    <section id="community">
+      <h2>🎪 Community Hub</h2>
+      <p>Community highlights, member recognition, and roles overview.</p>
+    </section>
+
+    <!-- Events Center -->
+    <section id="events">
+      <h2>🏆 Events Center</h2>
+      <p>Monthly Brawl Stars duels with championship roles!</p>
+    </section>
+
+    <!-- Server Stats -->
+    <section id="stats">
+      <h2>📊 Server Stats</h2>
+      <p>Manual or auto-updated server statistics.</p>
+    </section>
+
+    <!-- Media & Gallery -->
+    <section id="media">
+      <h2>🖼️ Media & Gallery</h2>
+      <p>Browse images, art, and screenshots.</p>
+    </section>
+
+    <!-- Server History -->
+    <section id="history">
+      <h2>📜 Server History</h2>
+      <p>Timeline of events and milestones.</p>
+    </section>
+
+    <!-- Partners & Links -->
+    <section id="links">
+      <h2>🤝 Partners & Links</h2>
+      <p>Official links and partners.</p>
+    </section>
+
+    <!-- Fun Zone -->
+    <section id="fun">
+      <h2>🧩 Fun Zone</h2>
+      <p>Mini-games, quotes, and memes.</p>
+    </section>
+
+    <!-- Technical & Docs -->
+    <section id="tech">
+      <h2>⚙️ Technical & Docs</h2>
+      <p>Changelog, roadmap & dev notes.</p>
+    </section>
+
+    <!-- Credits -->
+    <section id="credits">
+      <h2>📝 Credits</h2>
+      <p>Website developed by <strong>@ilovetoast78</strong> & <strong>@ddiana.lol</strong></p>
+      <p>Version 2.1.0</p>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
