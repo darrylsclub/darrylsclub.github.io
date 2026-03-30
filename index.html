@@ -1,227 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Darryl’s Club — v1.2.0</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Darryl's Club</title>
+
+<!-- Custom font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
-/* Reset */
-* {margin:0; padding:0; box-sizing:border-box;}
-body {font-family:'Segoe UI', sans-serif; background:rgba(0,0,0,0.85); color:#fff;}
+    /* Base */
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background: #1f1f1f;
+        color: #fff;
+        overflow-x: hidden;
+    }
 
-/* Loading Bar */
-#loading-bar {position:fixed; top:0; left:0; height:4px; width:0; background:#00eaff; animation:loadbar 1.2s ease-out forwards;}
-@keyframes loadbar {100% {width:100%;}}
+    a { text-decoration: none; }
 
-/* Mobile Buttons */
-#mobile-buttons {display:flex; overflow-x:auto; gap:10px; background:rgba(0,0,0,0.9); padding:10px; position:sticky; top:0; z-index:10;}
-#mobile-buttons button {flex:0 0 auto; background:#a73aff; color:#fff; border:none; padding:10px 15px; border-radius:6px; cursor:pointer;}
-#mobile-buttons button:hover {background:#00eaff;}
+    /* Header / Home */
+    .header {
+        text-align: center;
+        padding: 80px 20px;
+        max-width: 900px;
+        margin: auto;
+        animation: fadeIn 1s ease;
+    }
 
-/* Sidebar */
-#sidebar {display:block; position:fixed; top:0; left:0; width:240px; height:100vh; background:rgba(0,0,0,0.9); padding:20px; border-right:2px solid #00eaff; overflow-y:auto;}
-#sidebar .logo-section {text-align:center; margin-bottom:20px;}
-#sidebar .logo-section img {width:100px; margin-bottom:10px; border:2px solid #a73aff; border-radius:50%;}
-#sidebar nav ul {list-style:none;}
-#sidebar nav ul li {margin:15px 0; cursor:pointer; transition:0.3s;}
-#sidebar nav ul li:hover {color:#00eaff;}
+    .header img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 25px;
+        box-shadow: 0px 0px 25px rgba(255,255,255,0.07);
+    }
 
-/* Main */
-main {margin-left:260px; padding:30px;}
-section {display:none; opacity:0; animation:fadein 0.4s forwards;}
-section.active-section {display:block;}
+    .header h1 { font-size: 2.5rem; margin-bottom: 15px; font-weight: 700; }
+    .header p { font-size: 1.05rem; line-height: 1.6; opacity: 0.9; }
 
-/* Staff Cards */
-.staff-card {background: rgba(0,0,0,0.7); border:1px solid #00eaff; padding:10px; margin:10px 0; border-radius:6px;}
-.staff-card h3 {margin-bottom:5px;}
-.staff-card button {background:#a73aff; color:#fff; border:none; padding:6px 10px; border-radius:4px; cursor:pointer;}
-.staff-card button:hover {background:#00eaff;}
-.dropdown-content {display:none; margin-top:5px; padding:8px; border:1px solid #00eaff; border-radius:6px; background: rgba(0,0,0,0.75);}
+    /* Sidebar Button */
+    .menu-btn {
+        position: fixed;
+        top: 25px;
+        right: 25px;
+        width: 55px;
+        height: 55px;
+        background: #2a2a2a;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        transition: 0.3s;
+        box-shadow: 0px 0px 12px rgba(0,0,0,0.4);
+    }
+    .menu-btn:hover { background: #333; }
+    .dot { width: 6px; height: 6px; background: white; border-radius: 50%; margin: 3px; }
 
-/* Q&A Boxes */
-.qa {margin:10px 0; padding:10px; border:1px solid #00eaff; border-radius:6px;}
+    /* Sidebar */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        right: -320px;
+        width: 320px;
+        height: 100%;
+        background: #2b2b2b;
+        padding: 40px 25px;
+        box-shadow: -5px 0px 15px rgba(0,0,0,0.4);
+        transition: 0.45s ease;
+        z-index: 999;
+        overflow-y: auto;
+    }
+    .sidebar.open { right: 0; }
+    .sidebar h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; }
+    .option {
+        padding: 15px 0;
+        font-size: 1.1rem;
+        font-weight: 400;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        transition: 0.3s;
+    }
+    .option:hover { opacity: 0.6; }
 
-/* Links Buttons */
-.link-btn {background:#a73aff; color:#fff; border:none; padding:12px 18px; border-radius:6px; cursor:pointer;}
-.link-btn:hover {background:#00eaff;}
+    /* Sections */
+    .section {
+        display: none;
+        max-width: 900px;
+        margin: auto;
+        padding: 40px 25px 90px;
+        animation: fadeIn 0.7s ease;
+        line-height: 1.7;
+    }
+    .section.active { display: block; }
 
-/* Fade */
-@keyframes fadein {100% {opacity:1;}}
+    h3 { font-size: 1.7rem; margin-bottom: 20px; }
 
-/* Responsive */
-@media(max-width:768px){#sidebar{display:none;} main{margin-left:0; padding:20px;}}
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        padding: 14px 22px;
+        background: white;
+        color: black;
+        font-weight: 600;
+        border-radius: 14px;
+        text-decoration: none;
+        margin-top: 20px;
+        transition: 0.3s;
+    }
+    .btn:hover { opacity: 0.7; }
+
+    /* Animations */
+    @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
 </style>
-</head>
-<body>
-
-<div id="loading-bar"></div>
-
-<!-- Mobile Navigation -->
-<div id="mobile-buttons">
-  <button onclick="showSection('home')">Home</button>
-  <button onclick="showSection('qna')">Q&A</button>
-  <button onclick="showSection('staff')">Staff</button>
-  <button onclick="showSection('discord')">Discord</button>
-  <button onclick="showSection('nulls')">Null’s Club</button>
-  <button onclick="showSection('verification')">Verification</button>
-  <button onclick="showSection('credits')">Credits</button>
-</div>
-
-<!-- Sidebar -->
-<aside id="sidebar">
-  <div class="logo-section">
-    <img src="https://stickpng.com/assets/images/580b57fcd9996e24bc43c4f2.png" alt="Darryl’s Club Logo">
-    <h2>Darryl’s Club</h2>
-  </div>
-  <nav>
-    <ul>
-      <li onclick="showSection('home')">🏠 Home</li>
-      <li onclick="showSection('qna')">❓ Q&A</li>
-      <li onclick="showSection('staff')">🛡️ Staff</li>
-      <li onclick="showSection('discord')">🔗 Discord</li>
-      <li onclick="showSection('nulls')">🟦 Null’s Club</li>
-      <li onclick="showSection('verification')">🔒 Verification</li>
-      <li onclick="showSection('credits')">📝 Credits</li>
-    </ul>
-  </nav>
-  <div class="version">v1.2.0</div>
-</aside>
-
-<main>
-  <section id="home" class="active-section">
-    <h1>Welcome to Darryl’s Club</h1>
-    <p>This is the official hub for our community. Navigate using the sidebar or the mobile buttons above. Explore staff info, Q&A, verification, and official links.</p>
-  </section>
-
-  <section id="qna">
-    <h2>❓ Q&A</h2>
-    <div class="qa"><strong>How to become staff?</strong><p>Be active, follow the rules, and contact Higher Staff to apply.</p></div>
-    <div class="qa"><strong>What happens if I break a rule?</strong><p>Depending on severity: warning → timeout → ban.</p></div>
-    <div class="qa"><strong>Can I appeal a ban?</strong><p>Contact Mr.Black or any Higher Staff member you’re connected with.</p></div>
-    <div class="qa"><strong>How do I verify my account?</strong><p>Submit your info in the Verification section for staff review.</p></div>
-  </section>
-
-  <section id="staff">
-    <h2>🛡️ Staff</h2>
-    <p>All staff are listed. Click “View Responsibilities” to see details.</p>
-
-    <h3>👑 Higher Staff</h3>
-    <div class="staff-card">
-      <h3>Mr.Black <span>(Owner)</span></h3>
-      <button onclick="toggleDropdown(this)">View Responsibilities</button>
-      <div class="dropdown-content">
-        <p>Discord: @mr.black78</p>
-        <p>Oversees server operations, makes decisions, manages staff coordination.</p>
-      </div>
-    </div>
-    <div class="staff-card">
-      <h3>Ace <span>(Overseer)</span></h3>
-      <button onclick="toggleDropdown(this)">View Responsibilities</button>
-      <div class="dropdown-content">
-        <p>Discord: @aceyywithay</p>
-        <p>Supervises staff, handles escalations, ensures rules are enforced fairly.</p>
-      </div>
-    </div>
-
-    <h3>🔧 Lower Staff</h3>
-    <div class="staff-card">
-      <h3>Jayden <span>(Moderator)</span></h3>
-      <button onclick="toggleDropdown(this)">View Responsibilities</button>
-      <div class="dropdown-content">
-        <p>Discord: @aian_jj</p>
-        <p>Enforces rules, manages reports, assists members.</p>
-      </div>
-    </div>
-    <div class="staff-card">
-      <h3>Xye <span>(Trial Moderator)</span></h3>
-      <button onclick="toggleDropdown(this)">View Responsibilities</button>
-      <div class="dropdown-content">
-        <p>Discord: @xyeistiredfromthis</p>
-        <p>Trial moderator under supervised training.</p>
-      </div>
-    </div>
-    <div class="staff-card">
-      <h3>Mark <span>(Rule Enforcer)</span></h3>
-      <button onclick="toggleDropdown(this)">View Responsibilities</button>
-      <div class="dropdown-content">
-        <p>Discord: @markymark2810</p>
-        <p>Monitors compliance, ensures rules are followed.</p>
-      </div>
-    </div>
-    <div class="staff-card">
-      <h3>Kal <span>(Integration Liaison)</span></h3>
-      <button onclick="toggleDropdown(this)">View Responsibilities</button>
-      <div class="dropdown-content">
-        <p>Discord: @chollima216</p>
-        <p>Makes sure everyone stays friendly and maintains a positive atmosphere.</p>
-      </div>
-    </div>
-
-    <h3>🕊️ Retired Staff</h3>
-    <div class="staff-card">
-      <h3>Retired Staff</h3>
-      <button onclick="toggleDropdown(this)">View Responsibilities</button>
-      <div class="dropdown-content">
-        <p>@ilovetoast78 — Overseer</p>
-        <p>@ddiana.lol — Manager</p>
-        <p>@dominoo90 — Moderator</p>
-        <p>@gabriel_1975 — Senior Mod</p>
-        <p>@aiden_from_sbg16 — Moderator</p>
-        <p>Note: may be slightly outdated.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="discord">
-    <h2>🔗 Discord Server</h2>
-    <p>Press the button below to join our official Discord server and become part of the community.</p>
-    <a href="https://discord.gg/EnJApsrQKA" target="_blank"><button class="link-btn">Join Discord</button></a>
-  </section>
-
-  <section id="nulls">
-    <h2>🟦 Null’s Club</h2>
-    <p>Official partner server. Click below to visit Null’s Club and explore events and community activities.</p>
-    <a href="https://link.nulls.gg/nb/invite/band/en?tag=QQ0LUQ998&token=p3n4y9uvzcr" target="_blank"><button class="link-btn">Visit Null’s Club</button></a>
-  </section>
-
-  <section id="verification">
-    <h2>🔒 Verification</h2>
-    <p>New members must submit the form below to verify with staff.</p>
-    <pre>
-Age:
-How did you find the server?
-Main account:
-Rules confirmed (yes/no):
-Past bans:
-Understanding of moderation:
-    </pre>
-  </section>
-
-  <section id="credits">
-    <h2>📝 Credits</h2>
-    <p>Website developed by @ilovetoast78 & @ddiana.lol</p>
-    <p>Version 1.2.0</p>
-  </section>
-</main>
 
 <script>
-// Hide loading bar after animation
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => document.getElementById('loading-bar').style.display='none', 1300);
-});
+    // Toggle sidebar
+    function toggleMenu() {
+        document.getElementById("sidebar").classList.toggle("open");
+    }
 
-// Switch sections
-function showSection(id){
-  document.querySelectorAll('main section').forEach(s => s.classList.remove('active-section'));
-  document.getElementById(id).classList.add('active-section');
-}
-
-// Staff dropdown toggle
-function toggleDropdown(button){
-  const content = button.nextElementSibling;
-  content.style.display = content.style.display==='block'?'none':'block';
-}
+    // Show section and close sidebar
+    function showSection(id) {
+        document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        document.getElementById("sidebar").classList.remove("open");
+        window.scrollTo(0,0);
+    }
 </script>
+</head>
+
+<body>
+    <!-- Sidebar Button -->
+    <div class="menu-btn" onclick="toggleMenu()">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>Menu</h2>
+        <div class="option" onclick="showSection('home')">Home</div>
+        <div class="option" onclick="showSection('qa')">Q&A's</div>
+        <div class="option" onclick="showSection('staff')">Server Staff</div>
+        <div class="option" onclick="showSection('discord')">Discord Server</div>
+        <div class="option" onclick="showSection('nulls')">Null's Club</div>
+        <div class="option" onclick="showSection('verify')">Server Verification</div>
+        <div class="option" onclick="showSection('credits')">Credits</div>
+    </div>
+
+    <!-- Home -->
+    <div class="header section active" id="home">
+        <img src="https://i.postimg.cc/W4Y1jwtg/301bc99bc52c48890f5618b9b0292341.jpg" alt="Logo">
+        <h1>Welcome to Darryl's Club</h1>
+        <p>
+            Here you will find information and links regarding the community.<br><br>
+            Press the three dots in the top right corner to navigate through the site.
+        </p>
+    </div>
+
+    <!-- Q&A Section -->
+    <div class="section" id="qa">
+        <h3>Q&A's</h3>
+        <p><strong>How to become staff?</strong><br>
+        Be active and engage with members to prove you are trustworthy and responsible.</p>
+
+        <p><strong>What happens if I break a rule?</strong><br>
+        Depending on severity: warning, timeout, or ban. Swearing = warning, doxxing = immediate ban.</p>
+
+        <p><strong>Can I appeal a ban?</strong><br>
+        Contact Mr.Black (@mr.black78) or any staff you are friends with.</p>
+    </div>
+
+    <!-- Server Staff -->
+    <div class="section" id="staff">
+        <h3>Server Staff</h3>
+        <p><strong>Higher Staff</strong><br>
+        Owner: Mr.Black (@mr.black78)<br>
+        Overseer: Ace (@aceyywithay)</p>
+
+        <p><strong>Lower Staff</strong><br>
+        Moderator: Jayden (@aian_jj)<br>
+        Trial Moderator: Xye (@xyeistiredfromthis)<br>
+        Rule Enforcer: Mark (@markymark2810)<br>
+        Integration Liaison: Kal (@chollima216)</p>
+
+        <p><strong>Retired Staff</strong><br>
+        @ilovetoast78 (Overseer)<br>
+        @ddiana.lol (Manager)<br>
+        @dominoo90 (Moderator)<br>
+        @gabriel_1975. (Senior Moderator)<br>
+        @aiden_from_sbg16 (Moderator)</p>
+
+        <p><em>Note: This list may be outdated and will be updated shortly.</em></p>
+    </div>
+
+    <!-- Discord Server -->
+    <div class="section" id="discord">
+        <h3>Discord Server</h3>
+        <p>If you wish to join our Discord server, press the button below:</p>
+        <a class="btn" href="https://discord.gg/EnJApsrQKA" target="_blank">Discord Server</a>
+    </div>
+
+    <!-- Null's Club -->
+    <div class="section" id="nulls">
+        <h3>Null's Club</h3>
+        <p>If you wish to join Null's Club, press the button below:</p>
+        <a class="btn" href="https://link.nulls.gg/nb/invite/band/en?tag=QQ0LUQ998&token=p3n4y9uvzcr" target="_blank">Null's Club</a>
+    </div>
+
+    <!-- Server Verification -->
+    <div class="section" id="verify">
+        <h3>Server Verification</h3>
+        <p>Copy and paste these questions into the verification channel:</p>
+        <pre>
+How old are you?
+How did you find this server?
+Is this your main account?
+Have you read the rules?
+Have you been in a similar server before, and if so, were you banned from one?
+Are you aware that staff may moderate at their own direction?
+        </pre>
+    </div>
+
+    <!-- Credits -->
+    <div class="section" id="credits">
+        <h3>Credits</h3>
+        <p>Website made & fully developed by @ilovetoast78 & @ddiana.lol</p>
+        <p><strong>Version: 1.2.0</strong></p>
+    </div>
 
 </body>
 </html>
