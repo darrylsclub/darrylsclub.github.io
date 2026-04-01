@@ -1,379 +1,200 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Darryl's Club</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
-/* ------------------------------ BASE ------------------------------ */
-body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    background: #1c1c1c;
-    color: #ffffff;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* --- Base --- */
+body { margin:0; font-family:"Inter",sans-serif; background:#1f1f1f; color:#fff; overflow-x:hidden; }
+a { text-decoration:none; color:inherit; }
 
-/* Smooth transitions */
-* {
-    transition: 0.25s ease;
-}
+/* --- Loader --- */
+#loader { position:fixed; top:0; left:0; width:100%; height:100%; background:#1f1f1f; display:flex; align-items:center; justify-content:center; z-index:2000; }
+.loading-bar { width:200px; height:4px; background:rgba(255,255,255,0.2); border-radius:20px; position:relative; overflow:hidden; }
+.loading-bar::after { content:""; position:absolute; top:0; left:-40%; width:40%; height:100%; background:white; animation: loading 1.4s infinite ease-in-out; }
+@keyframes loading { 0% { left:-40%; } 50% { left:100%; } 100% { left:100%; } }
+#loader.loaded { opacity:0; pointer-events:none; transition:0.7s; }
 
-/* Links */
-a { text-decoration: none; color: inherit; }
+/* --- Header --- */
+.header { text-align:center; padding:100px 30px 70px; max-width:900px; margin:auto; }
+.header img { width:180px; height:180px; border-radius:50%; margin-bottom:25px; object-fit:cover; box-shadow:0 0 25px rgba(255,255,255,0.07); }
+.header h1 { font-size:2.6rem; font-weight:700; margin-bottom:15px; }
+.header p { font-size:1.05rem; line-height:1.6; opacity:0.85; }
 
-/* ------------------------------ LOADER ------------------------------ */
+/* --- Menu Button --- */
+.menu-btn { position:fixed; top:25px; right:25px; width:55px; height:55px; background:#2a2a2a; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:1500; box-shadow:0 0 12px rgba(0,0,0,0.4); }
+.menu-btn:hover { background:#333; }
+.dot { width:6px; height:6px; background:white; border-radius:50%; margin:3px; }
 
+/* --- Sidebar --- */
+.sidebar { position:fixed; top:0; left:0; width:300px; height:100%; background:rgba(43,43,43,0.95); backdrop-filter:blur(10px); padding:35px 25px; box-shadow:5px 0 15px rgba(0,0,0,0.4); transform:translateX(-350px); transition:0.45s ease; z-index:999; overflow-y:auto; border-radius:0 10px 10px 0; }
+.sidebar.open { transform:translateX(0); }
+.sidebar h2 { font-size:1.4rem; margin-bottom:20px; font-weight:600; }
+.option { display:flex; align-items:center; padding:12px 0; font-size:1.1rem; cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.08); transition:0.3s; }
+.option:hover { opacity:0.7; }
+.option i { margin-right:10px; }
 
-    /* --- Loading Screen --- */
-    #loader { position:fixed; top:0; left:0; width:100%; height:100%; background:#1f1f1f; display:flex; align-items:center; justify-content:center; z-index:2000; }
-    .loading-bar { width:200px; height:3px; background:rgba(255,255,255,0.2); border-radius:20px; position:relative; overflow:hidden; }
-    .loading-bar::after { content:""; position:absolute; top:0; left:-40%; width:40%; height:100%; background:white; animation: loading 1.4s infinite ease-in-out; }
-    @keyframes loading { 0% { left:-40%; } 50% { left:100%; } 100% { left:100%; } }
-    .loaded { opacity:0; pointer-events:none; transition:0.7s; }
+/* --- Sections --- */
+.section { display:none; max-width:900px; margin:auto; padding:40px 25px 90px; line-height:1.7; }
+.section.active { display:block; }
 
-    // Loading screen removal
-    window.onload = function(){ setTimeout(()=>{document.getElementById("loader").classList.add("loaded");},900); }
+/* --- Buttons --- */
+.btn { display:inline-block; padding:14px 22px; background:white; color:black; font-weight:600; border-radius:14px; text-decoration:none; margin-top:20px; }
+.btn:hover { opacity:0.7; }
 
-<!-- LOADING -->
-<div id="loader"><div class="loading-bar"></div></div>
+/* --- Q&A --- */
+.qa-question { cursor:pointer; background:rgba(255,255,255,0.05); padding:12px 15px; border-radius:10px; margin-bottom:6px; font-weight:600; }
+.qa-answer { display:none; padding:10px 15px 12px; margin-bottom:10px; background:rgba(255,255,255,0.03); border-radius:8px; line-height:1.6; }
+.qa-question.active { background:rgba(255,255,255,0.1); }
+</style>
+<script>
+// Loader removal after page load
+window.onload = function(){ setTimeout(()=>{document.getElementById("loader").classList.add("loaded");},900); }
 
-/* ------------------------------ HEADER ------------------------------ */
-.header {
-    text-align: center;
-    padding: 110px 30px 70px;
-    max-width: 900px;
-    margin: auto;
-}
-
-.header img {
-    width: 165px;
-    height: 165px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 25px;
-    box-shadow: 0 0 30px rgba(255,255,255,0.06);
-}
-
-.header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-}
-
-.header p {
-    font-size: 1.05rem;
-    opacity: 0.85;
-}
-
-/* ------------------------------ MENU BUTTON ------------------------------ */
-.menu-btn {
-    position: fixed;
-    top: 25px; right: 25px;
-    width: 55px; height: 55px;
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(10px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1500;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
-}
-
-.menu-btn:hover { background: rgba(255,255,255,0.12); }
-
-.dot {
-    width: 6px;
-    height: 6px;
-    background: white;
-    border-radius: 50%;
-    margin: 3px;
-}
-
-/* ------------------------------ SIDEBAR ------------------------------ */
-.sidebar {
-    position: fixed;
-    top: 0; left: 0;
-    width: 300px;
-    height: 100%;
-    background: rgba(30,30,30,0.85);
-    backdrop-filter: blur(12px);
-    padding: 35px 25px;
-    border-right: 1px solid rgba(255,255,255,0.08);
-    transform: translateX(-350px);
-    transition: 0.4s ease;
-    z-index: 999;
-}
-
-.sidebar.open { transform: translateX(0); }
-
-.sidebar h2 {
-    font-size: 1.45rem;
-    margin-bottom: 30px;
-}
-
-.option {
-    padding: 12px 0;
-    font-size: 1.12rem;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    opacity: 0.85;
-}
-
-.option:hover {
-    opacity: 1;
-    padding-left: 8px;
-}
-
-.option.active {
-    color: #7cd6ff;
-    font-weight: 600;
-    opacity: 1;
-}
-
-/* ------------------------------ OVERLAY ------------------------------ */
-#overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.45);
-    backdrop-filter: blur(3px);
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.3s;
-    z-index: 900;
-}
-#overlay.active { opacity: 1; pointer-events: auto; }
-
-/* ------------------------------ SECTIONS ------------------------------ */
-.section {
-    display: none;
-    max-width: 900px;
-    margin: auto;
-    padding: 40px 25px 90px;
-    line-height: 1.7;
-    opacity: 0;
-    transform: translateY(10px);
-}
-
-.section.active {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-h3 {
-    font-size: 1.7rem;
-    margin-bottom: 20px;
-}
-
-/* ------------------------------ BUTTONS ------------------------------ */
-.btn {
-    display: inline-block;
-    padding: 14px 22px;
-    background: white;
-    color: #000;
-    font-weight: 600;
-    border-radius: 14px;
-    text-decoration: none;
-    margin-top: 20px;
-}
-
-.btn:hover {
-    opacity: 0.8;
-}
-
-/* ------------------------------ Q&A ------------------------------ */
-.qa-question {
-    cursor: pointer;
-    background: rgba(255,255,255,0.06);
-    padding: 14px 15px;
-    border-radius: 12px;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-.qa-question.active {
-    background: rgba(255,255,255,0.12);
-}
-
-.qa-answer {
-    display: none;
-    padding: 12px 15px;
-    margin-bottom: 12px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 10px;
-}
-
-/* ------------------------------ FOOTER ------------------------------ */
-footer {
-    text-align: center;
-    opacity: 0.6;
-    padding: 20px;
-    margin-top: 60px;
-}
-
-/* ------------------------------ MOBILE ------------------------------ */
-@media (max-width: 600px) {
-    .header img { width: 130px; height: 130px; }
-    .header h1 { font-size: 2rem; }
-    .sidebar { width: 250px; }
-}
-/* ------------------------------ THEME SWITCH ------------------------------ */
-body.light {
-    background: #f5f5f5;
-    color: #000;
-}
-
-body.light .sidebar {
-    background: rgba(255,255,255,0.9);
-    border-right: 1px solid rgba(0,0,0,0.1);
-}
-body.light .menu-btn { background: rgba(0,0,0,0.1); }
-body.light .menu-btn:hover { background: rgba(0,0,0,0.18); }
-body.light .btn { background:#000; color:#fff; }
-body.light .qa-question { background:rgba(0,0,0,0.08); }
-body.light .qa-question.active { background:rgba(0,0,0,0.15); }
-body.light .qa-answer { background:rgba(0,0,0,0.06); }
-body.light footer { color:#000; opacity:0.6; }
-
-</style><script>
 // Sidebar toggle
-function toggleMenu() {
-    const sb = document.getElementById("sidebar");
-    const ov = document.getElementById("overlay");
-
-    sb.classList.toggle("open");
-    ov.classList.toggle("active");
-
-    document.body.style.overflow = sb.classList.contains("open") ? "hidden" : "auto";
-}
+function toggleMenu(){ document.getElementById("sidebar").classList.toggle("open"); }
 
 // Show section
-function showSection(id) {
-    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-
-    document.querySelectorAll(".option").forEach(o => o.classList.remove("active"));
-    event.target.closest(".option").classList.add("active");
-
-    if (window.innerWidth < 1024) { toggleMenu(); }
-    window.scrollTo(0, 0);
+function showSection(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
-// Loader fade-out
-window.onload = function () {
-    setTimeout(() => {
-        document.getElementById("loader").classList.add("loaded");
-    }, 900);
-};
-
-// Q&A togglesunction toggleQA(el) {
-    el.classList.toggle("active");
-    let ans = el.nextElementSibling;
-    ans.style.display = ans.style.display === "block" ? "none" : "block";
+// Q&A toggle
+function toggleQA(el){
+  el.classList.toggle("active");
+  let ans = el.nextElementSibling;
+  ans.style.display = ans.style.display==="block"?"none":"block";
 }
-// Theme toggle
-const themeToggle = () => {
-    const body = document.body;
-    body.classList.toggle("light");
+</script>
+</head>
+<body>
 
-    document.getElementById("themeToggle").innerText =
-        body.classList.contains("light") ? "☀️ Light" : "🌙 Dark";
-};
+<!-- Loader -->
+<div id="loader"><div class="loading-bar"></div></div>
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("themeToggle").onclick = themeToggle;
-});
-</script></head><body><!-- THEME SWITCH BUTTON --><div id="themeToggle" style="position:fixed; bottom:25px; right:25px; background:rgba(255,255,255,0.08); backdrop-filter:blur(8px); padding:10px 16px; border-radius:12px; cursor:pointer; z-index:1600; font-weight:600;">🌙 Dark</div><div id="loader"><div class="loading-bar"></div></div>
-<div id="overlay" onclick="toggleMenu()"></div><!-- MENU BUTTON --><div class="menu-btn" onclick="toggleMenu()">
-    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-</div><!-- SIDEBAR --><div class="sidebar" id="sidebar">
-    <h2>Darryl's Club</h2>
-    <div class="option active" onclick="showSection('home')">🏠 Home</div>
-    <div class="option" onclick="showSection('qa')">❓ Q&A's</div>
-    <div class="option" onclick="showSection('staff')">👥 Server Staff</div>
-    <div class="option" onclick="showSection('discord')">💬 Discord Server</div>
-    <div class="option" onclick="showSection('nulls')">⭐ Null's Club</div>
-    <div class="option" onclick="showSection('verify')">📝 Verification</div>
-    <div class="option" onclick="showSection('announcements')">📢 Announcements</div>
-    <div class="option" onclick="showSection('events')">🎉 Events / Contests</div>
-    <div class="option" onclick="showSection('credits')">⚙️ Credits</div>
-</div><!-- HOME --><div class="header section active" id="home">
-    <img src="https://i.postimg.cc/W4Y1jwtg/301bc99bc52c48890f5618b9b0292341.jpg" alt="Logo">
-    <h1>Welcome to Darryl's Club</h1>
-    <p>Here you will find information and links regarding the community.<br><br>
-       Press the three dots in the top right corner to navigate through the site.</p>
-</div><!-- Q&A --><div class="section" id="qa">
-    <h3>Q&A's</h3>
-    <div class="qa-question" onclick="toggleQA(this)">How to become staff?</div>
-    <div class="qa-answer">Be active and helpful in the community.</div><div class="qa-question" onclick="toggleQA(this)">What happens if I break a rule?</div>
-<div class="qa-answer">Punishments vary based on severity.</div>
-
-<div class="qa-question" onclick="toggleQA(this)">Can I appeal a ban?</div>
-<div class="qa-answer">Yes — contact a staff member.</div>
-
-<div class="qa-question" onclick="toggleQA(this)">How do I use the bots?</div>
-<div class="qa-answer">Each bot has its own help command.</div>
-
-<div class="qa-question" onclick="toggleQA(this)">How do I report a problem?</div>
-<div class="qa-answer">DM staff or open a ticket.</div>
-
-</div><!-- STAFF --><div class="section" id="staff">
-    <h3>Server Staff</h3>
-    <p><strong>Owner:</strong> Mr.Black (@mr.black78)<br>
-    <strong>Overseer:</strong> Ace (@aceyywithay)<br>
-    <strong>Manager:</strong> Diana (@ddiana.lol)<br><br><strong>Moderators:</strong><br>
-Jayden (@aian_jj)<br>
-Toast (@ilovetoast78)<br>
-<strong>Trial:</strong><br>Xye (@xyeistiredfromthis)<br>
-<strong>Rule Enforcer:</strong><br>Mark (@markymark2810)<br>
-<strong>Integration Liaison:</strong><br>Kal (chollima216)
-<strong>Retired Staff</strong>:<br>
-       @dominoo90 (Moderator)<br>
-       @gabriel_1975 (Senior Moderator)<br>
-       @aiden_from_sbg16 (Moderator)<br>
-       @firen1nja (Moderator)
-    </p>
+<!-- Menu Button -->
+<div class="menu-btn" onclick="toggleMenu()">
+  <div class="dot"></div><div class="dot"></div><div class="dot"></div>
 </div>
 
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <h2>Darryl's Club</h2>
+  <div class="option" onclick="showSection('home')"><i>🏠</i> Home</div>
+  <div class="option" onclick="showSection('qa')"><i>❓</i> Q&A's</div>
+  <div class="option" onclick="showSection('staff')"><i>👥</i> Server Staff</div>
+  <div class="option" onclick="showSection('discord')"><i>💬</i> Discord Server</div>
+  <div class="option" onclick="showSection('nulls')"><i>⭐</i> Null's Club</div>
+  <div class="option" onclick="showSection('verify')"><i>📝</i> Verification</div>
+  <div class="option" onclick="showSection('announcements')"><i>📢</i> Announcements</div>
+  <div class="option" onclick="showSection('events')"><i>🎉</i> Events / Contests</div>
+  <div class="option" onclick="showSection('credits')"><i>⚙️</i> Credits</div>
+</div>
 
-</div><!-- DISCORD --><div class="section" id="discord">
-    <h3>Discord Server</h3>
-    <p>If you wish to join our server, press the button below:</p>
-    <a class="btn" href="https://discord.gg/EnJApsrQKA">Join Discord</a>
-</div><!-- NULL'S --><div class="section" id="nulls">
-    <h3>Null's Club</h3>
-    <p>Press below to join the Null's Club:</p>
-    <a class="btn" href="https://link.nulls.gg/nb/invite/band/en?tag=QQ0LUQ998&token=p3n4y9uvzcr">Join Null's Club</a>
-</div><!-- VERIFICATION --><div class="section" id="verify">
-    <h3>Verification</h3>
-    <pre style="white-space: pre-wrap; background:#2a2a2a; padding:18px; border-radius:12px;">
+<!-- Home -->
+<div class="header section active" id="home">
+  <img src="https://i.postimg.cc/W4Y1jwtg/301bc99bc52c48890f5618b9b0292341.jpg" alt="Logo">
+  <h1>Welcome to Darryl's Club</h1>
+  <p>Here you will find information and links regarding the community.<br><br>
+  Press the three dots in the top right corner to navigate through the site.</p>
+</div>
+
+<!-- Q&A -->
+<div class="section" id="qa">
+  <h3>Q&A's</h3>
+  <div class="qa-question" onclick="toggleQA(this)">How to become staff?</div>
+  <div class="qa-answer">Be active and engage with members. Consistent activity and helpfulness proves trustworthiness.</div>
+
+  <div class="qa-question" onclick="toggleQA(this)">What happens if I break a rule?</div>
+  <div class="qa-answer">Depending on severity, this can range from a warning to a ban. Severe actions like doxxing result in immediate ban.</div>
+
+  <div class="qa-question" onclick="toggleQA(this)">Can I appeal a ban?</div>
+  <div class="qa-answer">Yes, contact Mr.Black (@mr.black78) or any staff member you are friends with.</div>
+
+  <div class="qa-question" onclick="toggleQA(this)">How do I use the bots?</div>
+  <div class="qa-answer">Check the bot commands in your server channels. Each bot has its own prefix and help command.</div>
+
+  <div class="qa-question" onclick="toggleQA(this)">How do I report a problem?</div>
+  <div class="qa-answer">Contact staff in the support channel or DM a staff member directly.</div>
+</div>
+
+<!-- Staff -->
+<div class="section" id="staff">
+  <h3>Server Staff</h3>
+  <p><em>(This list may be outdated. It will be updated shortly.)</em></p>
+  <p><strong>Owner</strong>: Mr.Black (@mr.black78)<br>
+     <strong>Overseer</strong>: Ace (@aceyywithay)<br>
+     <strong>Manager</strong>: Diana (@ddiana.lol)<br><br>
+     <strong>Moderator</strong>: Jayden (@aian_jj)<br>
+     <strong>Moderator</strong>: Toast (@ilovetoast78)<br>
+     <strong>Trial Moderator</strong>: Xye (@xyeistiredfromthis)<br>
+     <strong>Rule Enforcer</strong>: Mark (@markymark2810)<br>
+     <strong>Integration Liaison</strong>: Kal (@chollima216)<br><br>
+     <strong>Retired Staff</strong>:<br>
+     @dominoo90 (Moderator)<br>
+     @gabriel_1975 (Senior Moderator)<br>
+     @aiden_from_sbg16 (Moderator)<br>
+     @firen1nja (Moderator)
+  </p>
+</div>
+
+<!-- Discord -->
+<div class="section" id="discord">
+  <h3>Discord Server</h3>
+  <p>If you wish to join our Discord server, press the button below:</p>
+  <a class="btn" href="https://discord.gg/EnJApsrQKA">Discord Server</a>
+</div>
+
+<!-- Null's Club -->
+<div class="section" id="nulls">
+  <h3>Null's Club</h3>
+  <p>Press the button below to join the Null's Club:</p>
+  <a class="btn" href="https://link.nulls.gg/nb/invite/band/en?tag=QQ0LUQ998&token=p3n4y9uvzcr">Null's Club</a>
+</div>
+
+<!-- Verification -->
+<div class="section" id="verify">
+  <h3>Server Verification</h3>
+  <p>Copy and fill out the following for verification:</p>
+  <pre style="white-space: pre-wrap; background:#2a2a2a; padding:18px; border-radius:12px;">
 How old are you?
 How did you find this server?
 Is this your main account?
 Have you read the rules?
-Have you been in a similar server before? Were you banned?
-Are you aware staff may moderate at their own direction?
-    </pre>
-</div><!-- ANNOUNCEMENTS --><div class="section" id="announcements">
-    <h3>Announcements</h3>
-    <ul>
-        <li>New website version coming soon!</li>
-        <li>Server roles updated.</li>
-        <li>Null’s Club integration live.</li>
-    </ul>
-</div><!-- EVENTS --><div class="section" id="events">
-    <h3>Events / Contests</h3>
-    <ul>
-        <li>Monthly BS Championship – Winner gets a role.</li>
-        <li>Comrade of the Month – Nitro reward.</li>
-        <li>More events announced in the server.</li>
-    </ul>
-</div><!-- CREDITS --><div class="section" id="credits">
-    <h3>Credits</h3>
-    <p>Website developed by @ilovetoast78 & @ddiana.lol</p>
-    <p style="opacity:0.6;">Version: <strong>1.3.2</strong></p>
-</div><footer>© 2024 Darryl's Club — All Rights Reserved.</footer></body>
+Have you been in a similar server before? If so, were you banned?
+Are you aware that staff may moderate at their own direction?
+  </pre>
+</div>
+
+<!-- Announcements -->
+<div class="section" id="announcements">
+  <h3>Announcements</h3>
+  <ul>
+    <li>New website version coming this weekend!</li>
+    <li>Server roles updated for better looks.</li>
+    <li>Null’s Club integration now live.</li>
+  </ul>
+</div>
+
+<!-- Events -->
+<div class="section" id="events">
+  <h3>Events / Contests</h3>
+  <ul>
+    <li>Monthly BS Championship – Winner receives a role</li>
+    <li>Comrade of the Month – Best Member awarded with Nitro on every 1st of each month</li>
+    <li>Other events – Active ones get stated in the server</li>
+  </ul>
+</div>
+
+<!-- Credits -->
+<div class="section" id="credits">
+  <h3>Credits</h3>
+  <p>Website made & fully developed by @ilovetoast78 & @ddiana.lol</p>
+  <p style="opacity:0.6;">Version: <strong>1.3.4</strong></p>
+</div>
+
+</body>
 </html>
